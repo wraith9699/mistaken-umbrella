@@ -18,7 +18,7 @@
         </ImageButton>
 
         <ImageButton
-            android:id="@+id/camera"
+            android:id="@+id/go_to_camera"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
         android:orientation="horizontal" >
 
         <ImageButton
-            android:id="@+id/prev"
+            android:id="@+id/prev_image"
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_menu_back" >
@@ -56,16 +56,15 @@
 
             <ImageView
                 android:id="@+id/pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:src="@drawable/singed3" 
-                android:contentDescription="Singed">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/sample_0" >
             </ImageView>
         </RelativeLayout>
 
         <ImageButton
-            android:id="@+id/next"
+            android:id="@+id/next_image"
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_menu_forward" >
