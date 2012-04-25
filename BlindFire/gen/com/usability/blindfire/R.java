@@ -28,10 +28,11 @@ public final class R {
         public static final int sample_0=0x7f02000a;
         public static final int setting_horizontal=0x7f02000b;
         public static final int singed2=0x7f02000c;
-        public static final int take_picture_horizontal_vertical=0x7f02000d;
-        public static final int to_gallery_horizontal=0x7f02000e;
-        public static final int to_settings_horizontal=0x7f02000f;
-        public static final int untitled=0x7f020010;
+        public static final int singed3=0x7f02000d;
+        public static final int take_picture_horizontal_vertical=0x7f02000e;
+        public static final int to_gallery_horizontal=0x7f02000f;
+        public static final int to_settings_horizontal=0x7f020010;
+        public static final int untitled=0x7f020011;
     }
     public static final class id {
         public static final int bottomlayer=0x7f090005;
@@ -39,7 +40,7 @@ public final class R {
         public static final int camera=0x7f090003;
         public static final int main=0x7f090000;
         public static final int middlelayer=0x7f090004;
-        public static final int next_image=0x7f090009;
+        public static final int next=0x7f090009;
         public static final int pic=0x7f090008;
         public static final int play=0x7f09000a;
         public static final int prev=0x7f090006;

@@ -42,6 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -55,6 +56,8 @@ public class CameraPreview extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// TODO Change so the layouts are built in XML
+		
+		//WeakReference wr = new WeakReference(this);
 
 		// Forces the view into fullscreen mode
 		// Note this should be removed once the layout is translated into XML
@@ -64,22 +67,22 @@ public class CameraPreview extends Activity {
 
 		// This is built from the bottom and going up in layers
 		// Main layout that holds the button layer ON TOP OF the preview layer
-		FrameLayout layout = new FrameLayout(this);
+		FrameLayout layout = new FrameLayout(this.getApplicationContext());
 
 		// Create our Preview view and set it as the content of our activity.
-		mPreview = new Preview(this);
+		mPreview = new Preview(this.getApplicationContext());
 
 		// Initial first layer
 		layout.addView(mPreview);
 
-		ViewFinderView vfv = new ViewFinderView(this);
+		ViewFinderView vfv = new ViewFinderView(this.getApplicationContext());
 		vfv.setId(0x7f080003);
 
 		// the top layer, holding all the buttons
-		RelativeLayout buttons = new RelativeLayout(this);
+		RelativeLayout buttons = new RelativeLayout(this.getApplicationContext());
 
 		//
-		ImageView galleryImage = new ImageView(this);
+		ImageView galleryImage = new ImageView(this.getApplicationContext());
 		galleryImage.setImageResource(R.drawable.to_gallery_horizontal);
 		LayoutParams galleryParam = new LayoutParams(130, 160);
 		galleryParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -93,7 +96,7 @@ public class CameraPreview extends Activity {
 
 		});
 
-		ImageView settingsImage = new ImageView(this);
+		ImageView settingsImage = new ImageView(this.getApplicationContext());
 		settingsImage.setImageResource(R.drawable.setting_horizontal);
 		LayoutParams settingsParam = new LayoutParams(130, 160);
 		settingsParam.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -110,14 +113,14 @@ public class CameraPreview extends Activity {
 
 		settingsImage.setPadding(-4, 0, 0, 0);
 
-		ImageView takePictureImage = new ImageView(this);
+		ImageView takePictureImage = new ImageView(this.getApplicationContext());
 		takePictureImage
 				.setImageResource(R.drawable.take_picture_horizontal_vertical);
 		LayoutParams takePictureParam = new LayoutParams(177, 370);
 		takePictureParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		takePictureParam.addRule(RelativeLayout.CENTER_VERTICAL);
 
-		final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+		final MediaPlayer mp = MediaPlayer.create(this.getApplicationContext(), R.raw.click);
 
 		takePictureImage.setOnClickListener(new OnClickListener() {
 			@Override
@@ -127,7 +130,7 @@ public class CameraPreview extends Activity {
 
 		});
 
-		final ImageView flashImage = new ImageView(this);
+		final ImageView flashImage = new ImageView(this.getApplicationContext());
 		flashImage.setImageResource(R.drawable.flash_horizontal);
 		LayoutParams flashParam = new LayoutParams(130, 160);
 		flashParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);

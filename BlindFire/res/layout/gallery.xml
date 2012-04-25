@@ -42,9 +42,9 @@
         </ImageButton>
 
         <RelativeLayout
-            android:layout_weight=".8"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent"
+            android:layout_weight=".8" >
 
             <EditText
                 android:id="@+id/title"
@@ -56,17 +56,16 @@
 
             <ImageView
                 android:id="@+id/pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/singed2" >
+                android:src="@drawable/singed3" 
+                android:contentDescription="Singed">
             </ImageView>
         </RelativeLayout>
 
-        
-        
         <ImageButton
-            android:id="@+id/next_image"
+            android:id="@+id/next"
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_menu_forward" >
