@@ -1,0 +1,13 @@
+<resources>
+
+    <string-array name="listArray">
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+
+    <integer-array name="listValues">
+        <item>1</item>
+        <item>3</item>
+    </integer-array>
+
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, BlindFireActivity!</string>
+    <string name="app_name">BlindFire</string>
+    <string name="inline_preferences">this</string>
+    <string name="title_toggle_preference">that</string>
+    <string name="summary_toggle_preference">the</string>
+    <string name="dialog_based_preferences">other</string>
+    <string name="dialog_title_edittext_preference">thing</string>
+    <string name="title_edittext_preference">or </string>
+    <string name="summary_list_preference">else</string>
+    <string name="title_list_preference">could</string>
+    <string name="dialog_title_list_preference">be</string>
+
+</resources>
