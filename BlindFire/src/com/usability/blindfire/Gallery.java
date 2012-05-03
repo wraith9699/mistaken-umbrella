@@ -17,9 +17,8 @@ import java.util.Arrays;
 public class Gallery extends Activity {
 
 	Integer[] img = { R.drawable.sample_0, R.drawable.sample_1,
-			R.drawable.sample_2, R.drawable.sample_2, R.drawable.sample_3,
-			R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6,
-			R.drawable.sample_7 };
+			R.drawable.sample_2, R.drawable.sample_3, R.drawable.sample_4,
+			R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7 };
 	ArrayList<Integer> availableImages = new ArrayList<Integer>(
 			Arrays.asList(img));
 
@@ -29,8 +28,9 @@ public class Gallery extends Activity {
 			Arrays.asList(name));
 
 	int currImage = 0;
-	
-	final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
+
+	final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(),
+			null);
 
 	/** Called when the activity is first created. */
 	@Override
@@ -79,15 +79,16 @@ public class Gallery extends Activity {
 			}
 
 		});
-		
+
 		ImageButton soraka = (ImageButton) findViewById(R.id.play);
 		soraka.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				tts.speak("There is no recorded message.", TextToSpeech.QUEUE_FLUSH, null);
+				tts.speak("There is no recorded message.",
+						TextToSpeech.QUEUE_FLUSH, null);
 			}
-			
+
 		});
 
 		changeImage(0);
@@ -123,7 +124,7 @@ public class Gallery extends Activity {
 	private void deleteImage() {
 		availableImages.remove(currImage);
 		availableNames.remove(currImage);
-		if(currImage > availableImages.size() - 1) {
+		if (currImage > availableImages.size() - 1) {
 			currImage = availableImages.size() - 1;
 		}
 		changeImage(currImage);
