@@ -1,22 +1,24 @@
 package com.usability.blindfire;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.EditText;
 
 public class Gallery extends Activity {
 
-	String[] availableImages = null;
-	int currImage;
+	int[] availableImages = { R.drawable.sample_0, R.drawable.sample_1,
+			R.drawable.sample_2, R.drawable.sample_2, R.drawable.sample_3,
+			R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6,
+			R.drawable.sample_7 };
+	String[] availableNames = { "Sample 0", "Sample 1", "Sample 2", "Sample 3",
+			"Sample 4", "Sample 5", "Sample 6", "Sample 7" };
+	int currImage = 0;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -25,9 +27,6 @@ public class Gallery extends Activity {
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
 
-		currImage = 0;
-		availableImages = fileList();
-		
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
 		prev.setOnClickListener(new OnClickListener() {
 
@@ -53,38 +52,37 @@ public class Gallery extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(
-						"com.usability.blindfire.MAIN"));
+				startActivity(new Intent("com.usability.blindfire.CAMPRE"));
 			}
 
 		});
+		changeImage(0);
 	}
 
-	public void prevImage() {
+	private void prevImage() {
+
 		if (currImage - 1 < 0) {
 			currImage = availableImages.length - 1;
 		} else {
 			currImage -= 1;
 		}
-		loadImage();
+		changeImage(currImage);
 	}
 
-	public void nextImage() {		
+	private void nextImage() {
 		if (currImage + 1 > availableImages.length - 1) {
 			currImage = 0;
 		} else {
 			currImage += 1;
 		}
-		loadImage();
+		changeImage(currImage);
 	}
-	
-	public void loadImage() {	
-		File pic = new File(availableImages[currImage]);
-		if(pic.exists()){
-		    Bitmap myBitmap = BitmapFactory.decodeFile(pic.getAbsolutePath());
 
-		    ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
-		    imageDisplay.setImageBitmap(myBitmap);
-		}
+	private void changeImage(int imageId) {
+		ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
+		EditText title = (EditText) findViewById(R.id.title);
+
+		imageDisplay.setImageResource(availableImages[imageId]);
+		title.setText(availableNames[imageId]);
 	}
 }
