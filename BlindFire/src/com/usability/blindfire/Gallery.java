@@ -3,6 +3,7 @@ package com.usability.blindfire;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,8 @@ public class Gallery extends Activity {
 			Arrays.asList(name));
 
 	int currImage = 0;
+	
+	final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
 
 	/** Called when the activity is first created. */
 	@Override
@@ -75,6 +78,16 @@ public class Gallery extends Activity {
 				return true;
 			}
 
+		});
+		
+		ImageButton soraka = (ImageButton) findViewById(R.id.play);
+		soraka.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				tts.speak("There is no recorded message.", TextToSpeech.QUEUE_FLUSH, null);
+			}
+			
 		});
 
 		changeImage(0);

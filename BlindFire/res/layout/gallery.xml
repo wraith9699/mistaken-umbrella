@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -15,6 +16,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/trash_desc"
+            android:focusable="true"
             android:src="@drawable/ic_menu_delete" >
         </ImageButton>
 
@@ -24,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/go_to_camera_desc"
+            android:focusable="true"
             android:src="@drawable/ic_menu_camera" >
         </ImageButton>
     </LinearLayout>
@@ -41,6 +44,7 @@
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/prev_desc"
+            android:focusable="true"
             android:src="@drawable/ic_menu_back" >
         </ImageButton>
 
@@ -53,6 +57,7 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:inputType="text" >
             </EditText>
 
@@ -61,7 +66,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/title"
-                android:contentDescription="@string/picture_desc" >
+                android:contentDescription="@string/picture_desc"
+                android:focusable="true" >
             </ImageView>
         </RelativeLayout>
 
@@ -70,6 +76,7 @@
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:contentDescription="@string/next_desc"
+            android:focusable="true"
             android:src="@drawable/ic_menu_forward" >
         </ImageButton>
     </LinearLayout>
@@ -86,6 +93,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/record_desc"
+            android:focusable="true"
             android:src="@drawable/ic_btn_speak_now" >
         </ImageButton>
 
@@ -95,6 +103,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:contentDescription="@string/play_desc"
+            android:focusable="true"
             android:src="@drawable/ic_menu_play_clip" >
         </ImageButton>
     </LinearLayout>
