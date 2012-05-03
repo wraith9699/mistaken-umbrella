@@ -6,18 +6,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.EditText;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Gallery extends Activity {
 
-	int[] availableImages = { R.drawable.sample_0, R.drawable.sample_1,
+	Integer[] img = { R.drawable.sample_0, R.drawable.sample_1,
 			R.drawable.sample_2, R.drawable.sample_2, R.drawable.sample_3,
 			R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6,
 			R.drawable.sample_7 };
-	String[] availableNames = { "Sample 0", "Sample 1", "Sample 2", "Sample 3",
+	ArrayList<Integer> availableImages = new ArrayList<Integer>(
+			Arrays.asList(img));
+
+	String[] name = { "Sample 0", "Sample 1", "Sample 2", "Sample 3",
 			"Sample 4", "Sample 5", "Sample 6", "Sample 7" };
+	ArrayList<String> availableNames = new ArrayList<String>(
+			Arrays.asList(name));
+
 	int currImage = 0;
 
 	/** Called when the activity is first created. */
@@ -56,13 +65,25 @@ public class Gallery extends Activity {
 			}
 
 		});
+
+		ImageButton delete = (ImageButton) findViewById(R.id.trash);
+		delete.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				deleteImage();
+				return true;
+			}
+
+		});
+
 		changeImage(0);
 	}
 
 	private void prevImage() {
 
 		if (currImage - 1 < 0) {
-			currImage = availableImages.length - 1;
+			currImage = availableImages.size() - 1;
 		} else {
 			currImage -= 1;
 		}
@@ -70,7 +91,7 @@ public class Gallery extends Activity {
 	}
 
 	private void nextImage() {
-		if (currImage + 1 > availableImages.length - 1) {
+		if (currImage + 1 > availableImages.size() - 1) {
 			currImage = 0;
 		} else {
 			currImage += 1;
@@ -82,7 +103,16 @@ public class Gallery extends Activity {
 		ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
 		EditText title = (EditText) findViewById(R.id.title);
 
-		imageDisplay.setImageResource(availableImages[imageId]);
-		title.setText(availableNames[imageId]);
+		imageDisplay.setImageResource(availableImages.get(imageId));
+		title.setText(availableNames.get(imageId));
+	}
+
+	private void deleteImage() {
+		availableImages.remove(currImage);
+		availableNames.remove(currImage);
+		if(currImage > availableImages.size() - 1) {
+			currImage = availableImages.size() - 1;
+		}
+		changeImage(currImage);
 	}
 }
