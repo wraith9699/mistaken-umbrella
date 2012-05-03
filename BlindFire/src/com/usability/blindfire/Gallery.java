@@ -7,7 +7,6 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.EditText;
@@ -33,10 +32,6 @@ public class Gallery extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(),
-				null);
-
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
 
@@ -85,8 +80,7 @@ public class Gallery extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				tts.speak("There is no recorded message.",
-						TextToSpeech.QUEUE_FLUSH, null);
+				speak("There is no recorded message.");
 			}
 
 		});
@@ -125,8 +119,14 @@ public class Gallery extends Activity {
 		availableImages.remove(currImage);
 		availableNames.remove(currImage);
 		if (currImage > availableImages.size() - 1) {
-			currImage = availableImages.size() - 1;
+			currImage = 0;
 		}
 		changeImage(currImage);
+	}
+
+	private void speak(String message) {
+		TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
+		tts.speak("There is no recorded message.", TextToSpeech.QUEUE_FLUSH,
+				null);
 	}
 }
