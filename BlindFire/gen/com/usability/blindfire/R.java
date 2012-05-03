@@ -47,9 +47,9 @@ public final class R {
         public static final int middlelayer=0x7f090004;
         public static final int next_image=0x7f090009;
         public static final int pic=0x7f090008;
-        public static final int play=0x7f09000a;
+        public static final int play=0x7f09000b;
         public static final int prev_image=0x7f090006;
-        public static final int record=0x7f09000b;
+        public static final int record=0x7f09000a;
         public static final int splash=0x7f09000c;
         public static final int title=0x7f090007;
         public static final int toplayer=0x7f090001;
@@ -71,13 +71,20 @@ public final class R {
         public static final int dialog_based_preferences=0x7f070005;
         public static final int dialog_title_edittext_preference=0x7f070006;
         public static final int dialog_title_list_preference=0x7f07000a;
+        public static final int go_to_camera_desc=0x7f07000c;
         public static final int hello=0x7f070000;
         public static final int inline_preferences=0x7f070002;
+        public static final int next_desc=0x7f07000f;
+        public static final int picture_desc=0x7f07000e;
+        public static final int play_desc=0x7f070010;
+        public static final int prev_desc=0x7f07000d;
+        public static final int record_desc=0x7f070011;
         public static final int summary_list_preference=0x7f070008;
         public static final int summary_toggle_preference=0x7f070004;
         public static final int title_edittext_preference=0x7f070007;
         public static final int title_list_preference=0x7f070009;
         public static final int title_toggle_preference=0x7f070003;
+        public static final int trash_desc=0x7f07000b;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;

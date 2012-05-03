@@ -1,7 +1,11 @@
 package com.usability.blindfire;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,11 +15,8 @@ import android.widget.ImageView;
 
 public class Gallery extends Activity {
 
-	int[] availableImages = { R.drawable.sample_0, R.drawable.sample_1,
-			R.drawable.sample_2, R.drawable.sample_2, R.drawable.sample_3,
-			R.drawable.sample_4, R.drawable.sample_5, R.drawable.sample_6,
-			R.drawable.sample_7 };
-	int currImage = 0;
+	String[] availableImages = null;
+	int currImage;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -24,6 +25,9 @@ public class Gallery extends Activity {
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
 
+		currImage = 0;
+		availableImages = fileList();
+		
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
 		prev.setOnClickListener(new OnClickListener() {
 
@@ -50,29 +54,37 @@ public class Gallery extends Activity {
 			@Override
 			public void onClick(View v) {
 				startActivity(new Intent(
-						"com.usability.blindfire.CAMERAPREVIEW"));
+						"com.usability.blindfire.MAIN"));
 			}
 
 		});
 	}
 
 	public void prevImage() {
-		ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
 		if (currImage - 1 < 0) {
 			currImage = availableImages.length - 1;
 		} else {
 			currImage -= 1;
 		}
-		imageDisplay.setImageResource(availableImages[currImage]);
+		loadImage();
 	}
 
-	public void nextImage() {
-		ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
+	public void nextImage() {		
 		if (currImage + 1 > availableImages.length - 1) {
 			currImage = 0;
 		} else {
 			currImage += 1;
 		}
-		imageDisplay.setImageResource(availableImages[currImage]);
+		loadImage();
+	}
+	
+	public void loadImage() {	
+		File pic = new File(availableImages[currImage]);
+		if(pic.exists()){
+		    Bitmap myBitmap = BitmapFactory.decodeFile(pic.getAbsolutePath());
+
+		    ImageView imageDisplay = (ImageView) findViewById(R.id.pic);
+		    imageDisplay.setImageBitmap(myBitmap);
+		}
 	}
 }

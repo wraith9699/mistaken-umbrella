@@ -12,5 +12,13 @@
     <string name="summary_list_preference">else</string>
     <string name="title_list_preference">could</string>
     <string name="dialog_title_list_preference">be</string>
+    
+    <string name="trash_desc">delete picture</string>
+    <string name="go_to_camera_desc">go to camera</string>
+    <string name="prev_desc">previous picture</string>
+    <string name="picture_desc">picture</string>
+    <string name="next_desc">next picture</string>
+    <string name="play_desc">play description</string>
+    <string name="record_desc">record description</string>
 
 </resources>
