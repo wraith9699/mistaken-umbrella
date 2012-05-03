@@ -29,13 +29,14 @@ public class Gallery extends Activity {
 
 	int currImage = 0;
 
-	final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(),
-			null);
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		final TextToSpeech tts = new TextToSpeech(this.getApplicationContext(),
+				null);
+
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
 
@@ -70,12 +71,11 @@ public class Gallery extends Activity {
 		});
 
 		ImageButton delete = (ImageButton) findViewById(R.id.trash);
-		delete.setOnLongClickListener(new OnLongClickListener() {
+		delete.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public boolean onLongClick(View v) {
+			public void onClick(View v) {
 				deleteImage();
-				return true;
 			}
 
 		});
