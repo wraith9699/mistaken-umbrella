@@ -2,6 +2,8 @@ package com.usability.blindfire;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -10,6 +12,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.EditText;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -27,6 +32,12 @@ public class Gallery extends Activity {
 			Arrays.asList(name));
 
 	int currImage = 0;
+
+	MediaPlayer beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+	MediaRecorder recorder = null;
+	MediaPlayer messagePlayer;
+	boolean recording = false;
+	boolean playing = false;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -80,7 +91,34 @@ public class Gallery extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				speak("There is no recorded message.");
+				if (playing) {
+					playing = false;
+					stopMessage();
+				} else {
+					playing = true;
+					if ((new File(availableNames.get(currImage) + ".3gp"))
+							.exists()) {
+						playMessage();
+					} else {
+						speak("There is no recorded message.");
+					}
+				}
+			}
+
+		});
+
+		ImageButton record = (ImageButton) findViewById(R.id.record);
+		record.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (recording) {
+					recording = false;
+					saveMessage();
+				} else {
+					recording = true;
+					recordMessage();
+				}
 			}
 
 		});
@@ -128,5 +166,48 @@ public class Gallery extends Activity {
 		TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
 		tts.speak("There is no recorded message.", TextToSpeech.QUEUE_FLUSH,
 				null);
+	}
+
+	private void recordMessage() {
+		speak("Record your message after the beep.");
+
+		recorder = new MediaRecorder();
+		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+		recorder.setOutputFile(availableNames.get(currImage));
+		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+		try {
+			recorder.prepare();
+		} catch (IOException e) {
+			Log.e("RecordMessage", "prepare() failed");
+		}
+
+		beep.start();
+		recorder.start();
+	}
+
+	private void saveMessage() {
+		recorder.stop();
+		recorder.release();
+		recorder = null;
+
+		speak("Message recorded.");
+	}
+	
+	private void playMessage() {
+		messagePlayer = new MediaPlayer();	
+		try {
+            messagePlayer.setDataSource(availableNames.get(currImage) + ".3gp");
+            messagePlayer.prepare();
+            messagePlayer.start();
+        } catch (IOException e) {
+            Log.e("Playing message", "prepare() failed");
+        }
+	}
+	
+	private void stopMessage() {
+		messagePlayer.release();
+        messagePlayer = null;
 	}
 }
