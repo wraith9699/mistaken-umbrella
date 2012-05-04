@@ -38,10 +38,9 @@ public class Gallery extends Activity {
 	MediaRecorder recorder;
 	MediaPlayer messagePlayer;
 	boolean recording = false;
-	boolean playing = false;
 
 	TextToSpeech tts;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -97,11 +96,9 @@ public class Gallery extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (playing) {
-					playing = false;
+				if (messagePlayer != null) {
 					stopMessage();
 				} else {
-					playing = true;
 					if ((new File(getAbsolutePath())).exists()) {
 						playMessage();
 					} else {
@@ -168,7 +165,7 @@ public class Gallery extends Activity {
 	}
 
 	private void speak(String message) {
-		
+
 		tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
@@ -211,13 +208,13 @@ public class Gallery extends Activity {
 	}
 
 	private void stopMessage() {
-		if (messagePlayer != null) {
-			messagePlayer.release();
-			messagePlayer = null;
-		}
+		messagePlayer.release();
+		messagePlayer = null;
 	}
 
 	private String getAbsolutePath() {
-		return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + availableNames.get(currImage).replace(" ", "_") + ".3gp";
+		return Environment.getExternalStorageDirectory().getAbsolutePath()
+				+ "/" + availableNames.get(currImage).replace(" ", "_")
+				+ ".3gp";
 	}
 }
