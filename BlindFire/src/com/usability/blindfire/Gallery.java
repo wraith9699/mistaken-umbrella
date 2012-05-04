@@ -166,8 +166,7 @@ public class Gallery extends Activity {
 
 	private void speak(String message) {
 		TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
-		tts.speak("There is no recorded message.", TextToSpeech.QUEUE_FLUSH,
-				null);
+		tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
 	private void recordMessage() {
@@ -176,11 +175,10 @@ public class Gallery extends Activity {
 		recorder = new MediaRecorder();
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		recorder.setOutputFile(getAbsolutePath());
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		recorder.setOutputFile(getAbsolutePath());
 
 		try {
-			beep.prepare();
 			recorder.prepare();
 		} catch (IOException e) {
 			Log.e("RecordMessage", "prepare() failed");
@@ -210,12 +208,13 @@ public class Gallery extends Activity {
 	}
 
 	private void stopMessage() {
-		messagePlayer.release();
-		messagePlayer = null;
+		if (messagePlayer != null) {
+			messagePlayer.release();
+			messagePlayer = null;
+		}
 	}
 
 	private String getAbsolutePath() {
-		return Environment.getExternalStorageDirectory().getAbsolutePath()
-				+ availableNames.get(currImage) + ".3gp";
+		return Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + availableNames.get(currImage).replace(" ", "_") + ".3gp";
 	}
 }
