@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.EditText;
@@ -19,20 +21,27 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Gallery extends Activity {
+
 	Integer[] img = { R.drawable.sample_0, R.drawable.sample_1,
 			R.drawable.sample_2, R.drawable.sample_3, R.drawable.sample_4,
 			R.drawable.sample_5, R.drawable.sample_6, R.drawable.sample_7 };
 	ArrayList<Integer> availableImages = new ArrayList<Integer>(
 			Arrays.asList(img));
+
 	String[] name = { "Sample 0", "Sample 1", "Sample 2", "Sample 3",
 			"Sample 4", "Sample 5", "Sample 6", "Sample 7" };
 	ArrayList<String> availableNames = new ArrayList<String>(
 			Arrays.asList(name));
+
 	int currImage = 0;
+
 	MediaPlayer beep;
 	MediaRecorder recorder;
 	MediaPlayer messagePlayer;
 	boolean recording = false;
+
+	EditText title;
+
 	TextToSpeech tts;
 
 	/** Called when the activity is first created. */
@@ -41,9 +50,26 @@ public class Gallery extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
+
 		tts = new TextToSpeech(this.getApplicationContext(), null);
 		beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
 		messagePlayer = new MediaPlayer();
+
+		title = (EditText) findViewById(R.id.title);
+		title.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN)
+						&& (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					titleChange();
+					return true;
+				}
+				return false;
+			}
+
+		});
+
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
 		prev.setOnClickListener(new OnClickListener() {
 			@Override
@@ -51,6 +77,7 @@ public class Gallery extends Activity {
 				prevImage();
 			}
 		});
+
 		ImageButton next = (ImageButton) findViewById(R.id.next_image);
 		next.setOnClickListener(new OnClickListener() {
 			@Override
@@ -58,6 +85,7 @@ public class Gallery extends Activity {
 				nextImage();
 			}
 		});
+
 		ImageButton changeView = (ImageButton) findViewById(R.id.go_to_camera);
 		changeView.setOnClickListener(new OnClickListener() {
 			@Override
@@ -65,6 +93,7 @@ public class Gallery extends Activity {
 				startActivity(new Intent("com.usability.blindfire.CAMPRE"));
 			}
 		});
+
 		ImageButton delete = (ImageButton) findViewById(R.id.trash);
 		delete.setOnClickListener(new OnClickListener() {
 			@Override
@@ -72,6 +101,7 @@ public class Gallery extends Activity {
 				deleteImage();
 			}
 		});
+
 		ImageButton soraka = (ImageButton) findViewById(R.id.play);
 		soraka.setOnClickListener(new OnClickListener() {
 			@Override
@@ -87,6 +117,7 @@ public class Gallery extends Activity {
 				}
 			}
 		});
+
 		ImageButton record = (ImageButton) findViewById(R.id.record);
 		record.setOnClickListener(new OnClickListener() {
 			@Override
@@ -100,6 +131,7 @@ public class Gallery extends Activity {
 				}
 			}
 		});
+
 		changeImage(0);
 	}
 
@@ -193,5 +225,11 @@ public class Gallery extends Activity {
 		return Environment.getExternalStorageDirectory().getAbsolutePath()
 				+ "/" + availableNames.get(currImage).replace(" ", "_")
 				+ ".3gp";
+	}
+	
+	private void titleChange() {
+		File oldFile = new File(getAbsolutePath());
+		availableNames.set(currImage, title.getText().toString());
+		oldFile.renameTo(new File(getAbsolutePath()));
 	}
 }
