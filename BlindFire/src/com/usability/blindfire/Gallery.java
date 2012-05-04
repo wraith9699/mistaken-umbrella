@@ -50,6 +50,7 @@ public class Gallery extends Activity {
 
 		tts = new TextToSpeech(this.getApplicationContext(), null);
 		beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
+		messagePlayer = new MediaPlayer();
 
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
 		prev.setOnClickListener(new OnClickListener() {
@@ -96,7 +97,7 @@ public class Gallery extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (messagePlayer != null) {
+				if (messagePlayer.isPlaying()) {
 					stopMessage();
 				} else {
 					if ((new File(getAbsolutePath())).exists()) {
@@ -197,8 +198,8 @@ public class Gallery extends Activity {
 	}
 
 	private void playMessage() {
-		messagePlayer = new MediaPlayer();
 		try {
+			messagePlayer.reset();
 			messagePlayer.setDataSource(getAbsolutePath());
 			messagePlayer.prepare();
 			messagePlayer.start();
@@ -208,8 +209,8 @@ public class Gallery extends Activity {
 	}
 
 	private void stopMessage() {
+		messagePlayer.stop();
 		messagePlayer.release();
-		messagePlayer = null;
 	}
 
 	private String getAbsolutePath() {
