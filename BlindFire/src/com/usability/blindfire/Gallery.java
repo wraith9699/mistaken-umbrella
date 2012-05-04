@@ -40,6 +40,8 @@ public class Gallery extends Activity {
 	boolean recording = false;
 	boolean playing = false;
 
+	TextToSpeech tts;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class Gallery extends Activity {
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
 
+		tts = new TextToSpeech(this.getApplicationContext(), null);
 		beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
 
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
@@ -165,7 +168,7 @@ public class Gallery extends Activity {
 	}
 
 	private void speak(String message) {
-		TextToSpeech tts = new TextToSpeech(this.getApplicationContext(), null);
+		
 		tts.speak(message, TextToSpeech.QUEUE_FLUSH, null);
 	}
 
