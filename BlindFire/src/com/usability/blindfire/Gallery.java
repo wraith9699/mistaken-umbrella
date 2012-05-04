@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,8 @@ public class Gallery extends Activity {
 
 	int currImage = 0;
 
-	MediaPlayer beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
-	MediaRecorder recorder = null;
+	MediaPlayer beep;
+	MediaRecorder recorder;
 	MediaPlayer messagePlayer;
 	boolean recording = false;
 	boolean playing = false;
@@ -45,6 +46,8 @@ public class Gallery extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.d("this", "Something");
 		setContentView(R.layout.gallery);
+
+		beep = MediaPlayer.create(getApplicationContext(), R.raw.beep);
 
 		ImageButton prev = (ImageButton) findViewById(R.id.prev_image);
 		prev.setOnClickListener(new OnClickListener() {
@@ -96,8 +99,7 @@ public class Gallery extends Activity {
 					stopMessage();
 				} else {
 					playing = true;
-					if ((new File(availableNames.get(currImage) + ".3gp"))
-							.exists()) {
+					if ((new File(getAbsolutePath())).exists()) {
 						playMessage();
 					} else {
 						speak("There is no recorded message.");
@@ -174,10 +176,11 @@ public class Gallery extends Activity {
 		recorder = new MediaRecorder();
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		recorder.setOutputFile(availableNames.get(currImage));
+		recorder.setOutputFile(getAbsolutePath());
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
 		try {
+			beep.prepare();
 			recorder.prepare();
 		} catch (IOException e) {
 			Log.e("RecordMessage", "prepare() failed");
@@ -194,20 +197,25 @@ public class Gallery extends Activity {
 
 		speak("Message recorded.");
 	}
-	
+
 	private void playMessage() {
-		messagePlayer = new MediaPlayer();	
+		messagePlayer = new MediaPlayer();
 		try {
-            messagePlayer.setDataSource(availableNames.get(currImage) + ".3gp");
-            messagePlayer.prepare();
-            messagePlayer.start();
-        } catch (IOException e) {
-            Log.e("Playing message", "prepare() failed");
-        }
+			messagePlayer.setDataSource(getAbsolutePath());
+			messagePlayer.prepare();
+			messagePlayer.start();
+		} catch (IOException e) {
+			Log.e("Playing message", "prepare() failed");
+		}
 	}
-	
+
 	private void stopMessage() {
 		messagePlayer.release();
-        messagePlayer = null;
+		messagePlayer = null;
+	}
+
+	private String getAbsolutePath() {
+		return Environment.getExternalStorageDirectory().getAbsolutePath()
+				+ availableNames.get(currImage) + ".3gp";
 	}
 }
