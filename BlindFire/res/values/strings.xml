@@ -20,5 +20,6 @@
     <string name="next_desc">next picture</string>
     <string name="play_desc">play description</string>
     <string name="record_desc">record description</string>
+    <string name="full_image_desc">full screen picture</string>
 
 </resources>

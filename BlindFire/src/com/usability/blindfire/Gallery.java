@@ -9,6 +9,9 @@ import android.os.Environment;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -86,53 +89,23 @@ public class Gallery extends Activity {
 			}
 		});
 
-		ImageButton changeView = (ImageButton) findViewById(R.id.go_to_camera);
-		changeView.setOnClickListener(new OnClickListener() {
+		ImageView picture = (ImageView) findViewById(R.id.pic);
+		picture.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent("com.usability.blindfire.CAMPRE"));
-			}
-		});
-
-		ImageButton delete = (ImageButton) findViewById(R.id.trash);
-		delete.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				deleteImage();
-			}
-		});
-
-		ImageButton soraka = (ImageButton) findViewById(R.id.play);
-		soraka.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (messagePlayer.isPlaying()) {
-					stopMessage();
-				} else {
-					if ((new File(getAbsolutePath())).exists()) {
-						playMessage();
-					} else {
-						speak("There is no recorded message.");
-					}
-				}
-			}
-		});
-
-		ImageButton record = (ImageButton) findViewById(R.id.record);
-		record.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (recording) {
-					recording = false;
-					saveMessage();
-				} else {
-					recording = true;
-					recordMessage();
-				}
+				generateFullImage();
 			}
 		});
 
 		changeImage(0);
+
+		ImageView full_picture = (ImageView) findViewById(R.id.full_image);
+		full_picture.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				closeFullImage();
+			}
+		});
 	}
 
 	private void prevImage() {
@@ -226,10 +199,58 @@ public class Gallery extends Activity {
 				+ "/" + availableNames.get(currImage).replace(" ", "_")
 				+ ".3gp";
 	}
-	
+
 	private void titleChange() {
 		File oldFile = new File(getAbsolutePath());
 		availableNames.set(currImage, title.getText().toString());
 		oldFile.renameTo(new File(getAbsolutePath()));
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.gallery_action, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.record:
+			if (recording) {
+				recording = false;
+				saveMessage();
+			} else {
+				recording = true;
+				recordMessage();
+			}
+		case R.id.play:
+			if (messagePlayer.isPlaying()) {
+				stopMessage();
+			} else {
+				if ((new File(getAbsolutePath())).exists()) {
+					playMessage();
+				} else {
+					speak("There is no recorded message.");
+				}
+			}
+		case R.id.trash:
+			deleteImage();
+		case R.id.go_to_camera:
+			startActivity(new Intent("com.usability.blindfire.CAMPRE"));
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void generateFullImage() {
+		((ImageView) findViewById(R.id.full_image))
+				.setImageResource(availableImages.get(currImage));
+		setContentView(R.layout.full_image);
+	}
+
+	public void closeFullImage() {
+		setContentView(R.layout.gallery);
 	}
 }
