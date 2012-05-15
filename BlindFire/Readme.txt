@@ -22,16 +22,15 @@ Features:
 
 	-Vocal feedback provides users with guidance when positioning the camera, using 
 	 facial recognition technology to allow them to take properly positioned photos without 	 the need for visual feedback.
-	 (Not yet implemented)
 	
 	-Delayed mode uses vocal feedback to guide users into the frame without having to be 
 	 behind the camera.  This allows users to take self-portraits or group pictures
 	 with ease.
-	 (Not yet implemented)
+	 (In Progress)
 
 	-Users can use the gallery to review pictures and create short vocal messages for each 
 	 image.  These messages can be played back later for more information on the image.
-	 (Not fully implemented)
+	 (In Progress)
 
 How to Use:
 
